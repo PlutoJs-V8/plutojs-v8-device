@@ -10,6 +10,7 @@ const Intent = $java.findClass("android.content.Intent");
 const BatteryManager = $java.findClass("android.os.BatteryManager");
 const NetworkInterface = $java.findClass("java.net.NetworkInterface");
 const BroadcastReceiver = $java.findClass("com.stardust.autojs.core.exported.BroadcastReceiver");
+const DisplayMetrics = $java.findClass("android.util.DisplayMetrics");
 
 
 const AC = 1;
@@ -141,6 +142,23 @@ class Device extends EventEmitter {
     get battery() {
         let batteryIntent = this.context.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         return this._getBatteryFromIntent(batteryIntent);
+    }
+
+    /**
+     * using WindowManager get
+     * DisplayMetrics dm = new DisplayMetrics();
+     * getWindowManager().getDefaultDisplay().getMetrics(dm);
+     * dm.heightPixels);
+     * dm.widthPixels);
+     */
+    get width() {
+        const dm = new DisplayMetrics();
+        return dm.widthPixels;
+    }
+
+    get height() {
+        const dm = new DisplayMetrics();
+        return dm.heightPixels;
     }
 
     _getBatteryFromIntent(batteryIntent) {
