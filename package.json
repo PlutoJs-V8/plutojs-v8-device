@@ -15,5 +15,8 @@
   ],
   "author": "hyb1996",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^6.4.0"
+  }
 }
