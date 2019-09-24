@@ -152,13 +152,38 @@ class Device extends EventEmitter {
      * dm.widthPixels);
      */
     get width() {
-        const dm = new DisplayMetrics();
+        const dm = this._getDisplayMetrics();
         return dm.widthPixels;
     }
 
     get height() {
-        const dm = new DisplayMetrics();
+        const dm = this._getDisplayMetrics();
         return dm.heightPixels;
+    }
+
+    get displayMetrics() {
+        const dm = this._getDisplayMetrics();
+        return {
+            widthPixels : dm.widthPixels,
+            heightPixels : dm.heightPixels,
+            density : dm.density,
+            scaledDensity : dm.scaledDensity,
+            densityDpi : dm.densityDpi,
+            xdpi : dm.xdpi,
+            ydpi : dm.ydpi
+        };
+    }
+
+    _getDisplayMetrics() {
+        const wm = this.context.getSystemService(Context.WINDOW_SERVICE);
+        var displayMetrics = this._displayMetrics;
+        if (!displayMetrics) {
+            this._displayMetrics = displayMetrics = new DisplayMetrics();
+        }
+        if (wm != null) {
+            wm.getDefaultDisplay().getMetrics(displayMetrics);
+        }
+        return displayMetrics;
     }
 
     _getBatteryFromIntent(batteryIntent) {
