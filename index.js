@@ -54,6 +54,9 @@ class Device extends EventEmitter {
       this._onReceive(intent.getAction(), intent)
     })
     context.registerReceiver(this._receiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+    process.on('beforeExit', () => {
+        context.unregisterReceiver(this._receiver);
+    })
   }
 
   get os () {
