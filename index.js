@@ -264,7 +264,7 @@ class Device extends EventEmitter {
             case Intent.ACTION_BATTERY_CHANGED: {
                 let battery = this._getBatteryFromIntent(intent);
                 let plugged = this._getBatteryPluggedFromIntent(intent);
-                emit("battery-changed", {battery, plugged})
+                this.emit("battery-changed", {battery, plugged})
             }
         }
     }
